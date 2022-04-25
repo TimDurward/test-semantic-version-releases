@@ -16,7 +16,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "lts/*"
+      - name: Install Semantic-Release Plugins
+        run: npm install -D @semantic-release/exec
       - name: Release
+        id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+    outputs:
+      version: ${{ steps.semantic-release.release.nextVer }}
+  print-version:
+    needs: release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: print version
+        run: echo ${{ needs.semantic-release.outputs.version}}

@@ -1,14 +1,21 @@
 {
-    "branches": [
-      "master",
+  "tagFormat": "${version}",
+  "branches": [
+    "master",
+    {
+      "name": "beta",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/github",
+    [
+      "@semantic-release/exec",
       {
-        "name": "beta",
-        "prerelease": true
+        "publishCmd": "echo ::set-output name=nextVer::${nextRelease.version}"
       }
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/github"
     ]
-  }
+  ]
+}
