@@ -24,10 +24,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
     outputs:
-      version: ${{ steps.semantic-release.release.nextVer }}
+      version: ${{ steps.semantic-release.outputs.nextVer }}
   print-version:
     needs: release
     runs-on: ubuntu-20.04
     steps:
       - name: print version
-        run: echo ${{ needs.semantic-release.outputs.version}}
+        run: echo ${{ needs.release.outputs.version }}
